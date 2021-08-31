@@ -1,18 +1,25 @@
-const http = require('http');
 const express = require('express');
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const mongoose = require('mongoose');
+
+const PORT = 3000;
 
 const app = express();
 
-app.post('/sms', (req, res) => {
-  const twiml = new MessagingResponse();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-  twiml.message('The Robots are coming! Head for the hills!');
+app.use(express.static('public'));
 
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
+mongoose.connect('mongodb://localhost/organization', {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
 });
 
-http.createServer(app).listen(1337, () => {
-  console.log('Express server listening on port 1337');
+// routes
+app.use(require('./routes/organization.js'));
+app.use(require('./routes/exchange.js'));
+
+app.listen(PORT, () => {
+  console.log(`App running on port ${PORT}!`);
 });

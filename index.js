@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/sms', (req, res) => {
-
+ console.log("hi")
   // Start our TwiML response.
   const twiml = new MessagingResponse();
 
