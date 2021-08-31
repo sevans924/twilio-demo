@@ -1,27 +1,12 @@
-const express = require('express');
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
-
-const app = express();
+const express = require('express')
+const app = express()
+const port = 3000
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+  res.send('Hello World!')
+})
 
-app.post('/sms', (req, res) => {
- console.log("hi")
-  // Start our TwiML response.
-  const twiml = new MessagingResponse();
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
 
-  // Add a text message.
-  const msg = twiml.message('Check out this sweet owl!');
-
-  // Add a picture message.
-  msg.media('https://demo.twilio.com/owl.png');
-
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
-});
-
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
-});
