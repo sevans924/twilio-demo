@@ -1,25 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const PORT = 3000;
-
 const app = express();
+const PORT = process.env.PORT || 3001;
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(require('./routes'));
 
-mongoose.connect('mongodb://localhost/organization', {
-  useNewUrlParser: true,
+mongoose.connect('mongodb://localhost/text-demo', {
   useFindAndModify: false,
-  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
-// routes
-app.use(require('./routes/organization.js'));
-app.use(require('./routes/exchange.js'));
+// Use this to log mongo queries being executed!
+mongoose.set('debug', true);
 
-app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}!`);
-});
+app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));

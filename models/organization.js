@@ -1,16 +1,16 @@
-var mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-var orgSchema = new mongoose.Schema({
-  name:        { type: String, required: true },
+var orgSchema = new Schema({
+  name: { type: String, required: true },
   countryCode: { type: String, required: true },
   phoneNumber: { type: String, required: true },
-  language:    [String],
-  zip:         [String],
-  website:     { type: String, required: false },
+  language: [],
+  zip: [],
+  website: { type: String, required: false },
   description: { type: String, required: false },
-  hours:       { type: String, required: false },
+  hours: { type: String, required: false },
 });
 
-var organization = mongoose.model('organization', orgSchema);
+var organization = model('organization', orgSchema);
 
 module.exports = organization;
